@@ -9,3 +9,18 @@
   background: black;
   color: white;
 }
+
+/* Delete Nachricht */
+
+.color-card-highlight {
+  background-color: black;
+  color: white;
+  margin-top: 0;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.button-container {
+  display: flex; /* Flexbox für die Buttons */
+  align-items: center; /* Vertikale Ausrichtung */
+}
