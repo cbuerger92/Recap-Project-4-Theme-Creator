@@ -12,15 +12,22 @@ function App() {
     setColors([{ id: uid(), ...newColor }, ...colors]); // Unique ID hinzufügen + neue Farbe am Anfang
   }
 
+  function handleDeleteColor(id) {
+    setColors(colors.filter((color) => color.id !== id)); // Entfernt Farbe
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
-
       <ColorForm onSubmitColor={handleAddColor} />
 
-      {colors.map((color) => (
-        <Color key={color.id} color={color} />
-      ))}
+      {colors.length === 0 ? (
+        <p>No colors. Start by adding one!</p>
+      ) : (
+        colors.map((color) => (
+          <Color key={color.id} color={color} onDelete={handleDeleteColor} />
+        ))
+      )}
     </>
   );
 }
