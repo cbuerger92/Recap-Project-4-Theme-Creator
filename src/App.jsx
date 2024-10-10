@@ -16,6 +16,14 @@ function App() {
     setColors(colors.filter((color) => color.id !== id)); // Entfernt Farbe
   }
 
+  function handleUpdateColor(id, updateColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === id ? { ...color, ...updateColor } : color
+      )
+    );
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
@@ -25,7 +33,12 @@ function App() {
         <p>No colors. Start by adding one!</p>
       ) : (
         colors.map((color) => (
-          <Color key={color.id} color={color} onDelete={handleDeleteColor} />
+          <Color
+            key={color.id}
+            color={color}
+            onDelete={handleDeleteColor}
+            onUpdate={handleUpdateColor}
+          />
         ))
       )}
     </>
@@ -33,21 +46,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
-- Statisch - Farben werden nur einmal beim Laden der Seite aus initialColors geladen (wird nicht aktualisiert)
-- Farben können nicht geändert werden, weil sie nicht in einem Zustand (state) gespeichert sind
-
-return (
-  <>
-    <h1>Theme Creator</h1>
-
-    {initialColors.map((color) => {
-      return <Color key={color.id} color={color} />;
-    })}
-  </>
-);
-}
-
-*/

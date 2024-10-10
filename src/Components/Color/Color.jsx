@@ -1,9 +1,12 @@
 import "./Color.css";
 import { useState } from "react";
+import ColorForm from "../ColorForm/ColorForm";
 
-export default function Color({ color, onDelete }) {
-  const [showConfirm, setShowConfirm] = useState(false);
+export default function Color({ color, onDelete, onUpdate }) {
+  const [showConfirm, setShowConfirm] = useState(false); // State für Confirm
+  const [isEditing, setIsEditing] = useState(false); // State für Update
 
+  // Funktion zum löschen
   function handleDelete() {
     setShowConfirm(true); // Bestätigungsnachricht anzeigen
   }
@@ -17,6 +20,12 @@ export default function Color({ color, onDelete }) {
     setShowConfirm(false); // Bestätigungsnachricht ausblenden
   }
 
+  // Funktion zum Aktualisieren der Farbe
+  function handleUpdateColor(updateColor) {
+    onUpdate(color.id, updateColor); // Update übergeben
+    setIsEditing(false); // Edit Modus schließen
+  }
+
   return (
     <div
       className="color-card"
@@ -25,39 +34,39 @@ export default function Color({ color, onDelete }) {
         color: color.contrastText,
       }}
     >
-      <h3 className="color-card-headline">{color.hex}</h3>
-      <h4>{color.role}</h4>
-      <p>contrast: {color.contrastText}</p>
+      {isEditing ? ( // Wenn im Edit Modus
+        <>
+          <ColorForm
+            onSubmitColor={handleUpdateColor} // Funktion zum Aktualisieren übergeben
+            initialData={color} // Übergabe der aktuellen Daten
+            isEditing={isEditing} // Übergabe des Modus
+          />
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <h3 className="color-card-headline">{color.hex}</h3>
+          <h4>{color.role}</h4>
+          <p>contrast: {color.contrastText}</p>
+        </>
+      )}
 
       <div className="button-container">
-        {/* Zeigt den "Delete"-Button an, wenn die Bestätigung nicht angezeigt wird */}
-        {!showConfirm ? (
-          <button onClick={handleDelete}>Delete</button>
-        ) : (
+        {!showConfirm && !isEditing ? ( // Wenn weder die Bestätigung noch der Edit-Modus angezeigt wird
+          <>
+            <button onClick={handleDelete}>Delete</button>
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+          </>
+        ) : showConfirm ? ( // Wenn Bestätigungsmodus angezeigt wird
           <>
             <div className="color-card-highlight">
               <p>Really delete?</p>
             </div>
-            {/* "Cancel"-Button links und "Delete"-Button rechts */}
             <button onClick={cancelDelete}>Cancel</button>
             <button onClick={confirmDelete}>Delete</button>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );
-}
-
-{
-  /*
-
-<button onClick={handleDelete}>Delete</button>
-
-{showConfirm && (
-  <div className="color-card-highlight">
-    <p>Really delete?</p>
-    <button onClick={confirmDelete}>Delete</button>{" "}
-    <button onClick={cancelDelete}>Cancel</button>{" "}
-  </div>
-  */
 }
