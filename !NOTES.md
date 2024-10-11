@@ -110,9 +110,16 @@
 
 ## event.preventDefault()
 
-    - Dies verhindert, dass der Browser die Seite neu lädt, wie es bei einem normalen Formular-Submit passiert.
+    - Dies verhindert, dass der Browser die Seite neu lädt, wie es bei einem normalen Formular-Submit passiert
 
 ## event.target **
+
+## localStorage
+
+    - Speichert Daten im Browser, die auch nach dem Schließen der Seite bestehen bleiben. Es ist Teil des Web Storage API.
+
+    - use-local-storage-state Hook: Der Hook aus der Library funktioniert fast wie useState, mit dem Unterschied, dass die Daten nicht nur in der Komponente, sondern auch im localStorage gespeichert werden. Das nimmt viel Arbeit ab.
+
 
 
 

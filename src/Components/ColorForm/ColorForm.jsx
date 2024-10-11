@@ -39,11 +39,7 @@ export default function ColorForm({
         <ColorInput id="contrastText" defaultValue={initialData.contrastText} />
       </label>
       <br />
-      {isEditing ? ( // Update Color Button nur im Bearbeitungsmodus
-        <button type="submit">Update Color</button>
-      ) : (
-        <button type="submit">Add Color</button> // Add Color Button im normalen Modus
-      )}
+      <button>{isEditing ? "Update Color" : "Add Color"}</button>
     </form>
   );
 }
