@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
 import { initialColors } from "./lib/colors";
@@ -11,20 +10,20 @@ function App() {
     defaultValue: initialColors,
   });
 
-  function handleAddColor(newColor) {
-    setColors([{ id: uid(), ...newColor }, ...colors]); // Unique ID hinzufügen + neue Farbe am Anfang
+  async function handleAddColor(newColor) {
+    setColors([{ id: uid(), ...newColor }, ...colors]); // Neue Farbe am Anfang hinzufügen
   }
 
-  function handleDeleteColor(id) {
-    setColors(colors.filter((color) => color.id !== id)); // Entfernt Farbe
-  }
-
-  function handleUpdateColor(id, updateColor) {
+  async function handleUpdateColor(id, updateColor) {
     setColors(
       colors.map((color) =>
         color.id === id ? { ...color, ...updateColor } : color
       )
     );
+  }
+
+  function handleDeleteColor(id) {
+    setColors(colors.filter((color) => color.id !== id)); // Entfernt Farbe
   }
 
   return (
